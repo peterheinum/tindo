@@ -4,7 +4,10 @@ import VueRouter from 'vue-router'
 import Home from '../src/components/Home'
 import Graph from '../src/components/Graph'
 // import Chart from 'v-chart-plugin'
+import VueGoogleCharts from 'vue-google-charts'
  
+Vue.use(VueGoogleCharts)
+
 // Vue.use(Chart);
 Vue.use(VueRouter)
 Vue.config.productionTip = false
