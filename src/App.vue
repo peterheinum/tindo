@@ -42,10 +42,23 @@ export default {
     };
   },
   created() {
-    this.choseData('Matches')
+    this.choseData()
+    
   },
   methods: {
+    mostUsedWords(messages){
+      const words = messages.map(x => x.messages.map(o => o.message.split(' '))).flat(2).map(x => x.toLowerCase())
+      const temp = words.reduce((acc, cur) => {
+        acc[cur] ? acc[cur]++ : acc[cur] = 1
+        return acc
+      }, {})
+      const occurances = Object.keys(temp).map(x => ({word: x, value: temp[x]}))
+      const sorted = occurances.sort((a, b) => b.value - a.value)
+    },
+
     choseData(type) {
+      const { Messages } = data
+      this.mostUsedWords(Messages)
       const usage = data.Usage
       const keys = Object.keys(data.Usage)
       const toArray = obj => Object.keys(obj).map(x => ({ [x]: obj[x] }))
@@ -72,7 +85,7 @@ export default {
         acc[key] = count(mass[key])
         return acc
       }, {})
-      console.log(test)
+
       this.test = {key: 'swipes_likes', value: test.swipes_likes}
       this.test = {key: 'swipes_passes', value: test.swipes_passes}
 
