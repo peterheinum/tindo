@@ -1,55 +1,58 @@
 <template>
-  <svg width="500" height="270">
-    <g style="transform: translate(0, 10px)">
-      <path :d="line" />
-    </g>
-  </svg>
+  <div class="small">
+    <line-chart :chart-data="datacollection"></line-chart>
+    <button @click="fillData()">Randomize</button>
+  </div>
 </template>
 
 <script>
-import * as d3 from 'd3';
-export default {
-  props: {
-    graphData: Array
-  }, 
-  data() {
-    return {
-      line: '',
-    };
-  },
-  watch: {
-    graphData() {
-      this.calculatePath()
+  import LineChart from './LineChart.js'
+
+  export default {
+    components: {
+      LineChart
+    },
+    props: { data: Object },
+    watch: {
+      data(o) {
+        this.datacollection.datasets.find(x => x.label == o.key).data = o.value
+      }
+    },
+    data () {
+      return {
+        datacollection: null
+      }
+    },
+    created () {
+      this.fillData()
+    },
+    methods: {
+      fillData () {
+        this.datacollection = {
+          labels: [this.getRandomInt(), this.getRandomInt()],
+          datasets: [
+            {
+              label: 'swipes_likes',
+              backgroundColor: '#fe5665',
+              data: [this.getRandomInt(), this.getRandomInt()]
+            }, {
+              label: 'swipes_passes',
+              backgroundColor: '#2be6ae',
+              data: [this.getRandomInt(), this.getRandomInt()]
+            }
+          ]
+        }
+      },
+      getRandomInt () {
+        return Math.floor(Math.random() * (1000)) + 5
+      }
     }
-  },
-  methods: {
-    getScales() {
-      const x = d3.scaleTime().range([0, 430])
-      const y = d3.scaleLinear().range([210, 0])
-      d3.axisLeft().scale(x)
-      d3.axisBottom().scale(y)
-      x.domain(d3.extent(this.graphData, (d, i) => i))
-      y.domain([0, d3.max(this.graphData, d => d)])
-      return { x, y }
-    },
-    calculatePath() {
-      const scale = this.getScales()
-      const path = d3.line()
-        .x((d, i) => scale.x(i))
-        .y(d => scale.y(d))
-      this.line = path(this.graphData)
-    },
-  },
-};
+  }
 </script>
 
-<style scoped>
-svg {
-  margin: 25px;
-}
-path {
-  fill: none;
-  stroke: #76BF8A;
-  stroke-width: 3px;
-}
+<style>
+  .small {
+    max-width: 600px;
+    margin:  150px auto;
+  }
 </style>
