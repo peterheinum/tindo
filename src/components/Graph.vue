@@ -1,6 +1,6 @@
 <template>
   <div class="small">
-    <line-chart :chart-data="datacollection"></line-chart>
+    <line-chart :height="800" :width="800" :chart-data="datacollection"></line-chart>
     <button @click="fillData()">Randomize</button>
   </div>
 </template>
@@ -12,39 +12,23 @@
     components: {
       LineChart
     },
-    props: { data: Object },
-    watch: {
-      data(o) {
-        this.datacollection.datasets.find(x => x.label == o.key).data = o.value
-      }
-    },
+    props: { data: Array },
+    
     data () {
       return {
         datacollection: null
       }
     },
     created () {
-      this.fillData()
+      this.createGraph()
     },
     methods: {
-      fillData () {
+      createGraph() {
         this.datacollection = {
-          labels: [this.getRandomInt(), this.getRandomInt()],
-          datasets: [
-            {
-              label: 'swipes_likes',
-              backgroundColor: '#fe5665',
-              data: [this.getRandomInt(), this.getRandomInt()]
-            }, {
-              label: 'swipes_passes',
-              backgroundColor: '#2be6ae',
-              data: [this.getRandomInt(), this.getRandomInt()]
-            }
-          ]
+          labels: this.data.map(x => x.label),
+          datasets: this.data.map(x => x)
         }
-      },
-      getRandomInt () {
-        return Math.floor(Math.random() * (1000)) + 5
+        this.data.forEach(e => console.log(e))
       }
     }
   }
