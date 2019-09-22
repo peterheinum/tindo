@@ -25,8 +25,8 @@
     methods: {
       createGraph() {
         this.datacollection = {
-          labels: this.data.map(x => x.label),
-          datasets: this.data.map(x => x)
+          labels: ['statistics'],
+          datasets: this.data.map(x => x).sort((a, b) => a.data - b.data)
         }
         this.data.forEach(e => console.log(e))
       }

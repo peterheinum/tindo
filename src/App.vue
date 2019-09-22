@@ -8,7 +8,7 @@
     <!-- header  -->
     <!-- <Graph :graphData="graphData" /> -->
     <Graph v-if="reload" :data="inventory" />
-
+    <Dropzone />
     <!-- router view  -->
     <!-- footer -->
   </div>
@@ -16,6 +16,7 @@
 
 <script>
 import Graph from "./components/Graph";
+import Dropzone from "./components/Dropzone";
 import Welcome from "./components/Welcome";
 import router from "vue-router";
 import data from "./assets/data.json";
@@ -23,6 +24,7 @@ import data from "./assets/data.json";
 export default {
   name: "app",
   components: {
+    Dropzone,
     Graph
   },
   data() {
@@ -181,6 +183,6 @@ export default {
   display:inline;
 }
 body {
-  overflow-y: hidden;
+  /* overflow-y: hidden; */
 }
 </style>
