@@ -6,11 +6,11 @@
 </template>
 
 <script>
-  import BarChart from './BarChart.js'
+  import LineChart from './LineChart.js'
 
   export default {
     components: {
-      BarChart
+      LineChart
     },
     props: { data: Array },
     watch: {

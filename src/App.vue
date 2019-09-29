@@ -7,7 +7,8 @@
 
     <!-- header  -->
     <!-- <Graph :graphData="graphData" /> -->
-    <Graph v-if="reload" :data="inventory" />
+    <!-- <Graph :data="inventory" /> -->
+    <TimeGraph :data="inventory" />
     <Dropzone />
     <!-- router view  -->
     <!-- footer -->
@@ -16,8 +17,8 @@
 
 <script>
 import Graph from "./components/Graph";
+import TimeGraph from "./components/TimeGraph";
 import Dropzone from "./components/Dropzone";
-import Welcome from "./components/Welcome";
 import router from "vue-router";
 import data from "./assets/data.json";
 
@@ -25,7 +26,8 @@ export default {
   name: "app",
   components: {
     Dropzone,
-    Graph
+    TimeGraph,
+    Graph,
   },
   data() {
     return {
@@ -56,8 +58,8 @@ export default {
   },
   watch: {
     inventory(){
-      this.reload = false
-      setTimeout(() => this.reload = true, 20);
+      // this.reload = false
+      // setTimeout(() => this.reload = true, 20);
     }
   },
   methods: {
@@ -75,6 +77,9 @@ export default {
         value: temp[x]
       }));
       const sorted = occurances.sort((a, b) => b.value - a.value);
+
+      
+      
     },
 
     formatData(){
